@@ -1,0 +1,25 @@
+title: Attempting to Disable AppArmor Service
+description: Attempt to write detection rules that identify behaviors in the system that disable or attempt to shut down the AppArmor security module.
+status: experimental
+author: Luca Vaudano
+level: medium
+logsource:
+    product: any
+    category: any
+detection:
+  systemctl_case:
+    Image|endswith: /systemctl
+    CommandLine|contains|all:
+      - apparmor
+    CommandLine|contains:
+      - stop
+      - disable
+  initd_case:
+    CommandLine|contains|all:
+      - /etc/init.d/apparmor
+  kmod_case:
+    Image|endswith: /kmod
+    CommandLine|contains: apparmor
+  filter_show:
+    CommandLine|contains: show
+  condition: (initd_case or kmod_case) or (systemctl_case and not filter_show)

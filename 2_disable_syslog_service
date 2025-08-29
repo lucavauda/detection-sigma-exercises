@@ -1,0 +1,29 @@
+title: Attempting to Disable the Syslog Service
+description: Write rules to identify attempts to disable or shut down the Syslog service in Linux systems, considering all possible commands or operations that could be used to deactivate the service.
+status: experimental
+author: Luca Vaudano
+level: medium
+logsource:
+    product: any
+    category: any
+detection:
+  service_stop:
+    Image|endswith: /service
+    CommandLine|contains|all:
+      - stop
+  chkconfig_off:
+    Image|endswith: /chkconfig
+    CommandLine|contains|all:
+      - 'off'
+  systemctl_disable:
+    Image|endswith: /systemctl
+    CommandLine|contains:
+      - disable
+      - stop
+      - kill
+  syslog_services:
+    CommandLine|contains:
+      - syslog
+      - rsyslog
+      - syslog-ng
+  condition: (service_stop or chkconfig_off or systemctl_disable) and syslog_services

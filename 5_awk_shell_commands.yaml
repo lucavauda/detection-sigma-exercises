@@ -1,0 +1,42 @@
+title: AWK System Function for Executing Shell Commands
+description: Create a detection rule to identify the use of the system() function to execute shell commands through AWK commands (including awk, gawk, nawk, or mawk variants). The rule should account for common command structures, such as system() calls within BEGIN{} blocks, commands passed through variables, and command execution during file processing.
+status: experimental
+author: Luca Vaudano
+level: medium
+logsource:
+    product: any
+    category: any
+detection:
+  selection_awk_binary:
+    Image|contains:
+      - /usr/bin/awk
+      - /bin/awk
+      - /usr/bin/gawk
+      - /bin/gawk
+      - /usr/bin/nawk
+      - /bin/nawk
+      - /usr/bin/mawk
+      - /bin/mawk
+  selection_system_function:
+    CommandLine|contains:
+      - system(
+      - system (
+  selection_awk_patterns:
+    CommandLine|contains:
+      - 'BEGIN{'
+      - 'END{'
+      - NR==
+      - NF==
+      - $0~
+      - '/.*/{system'
+      - 'if(.*){system'
+      - 'for(.*){system'
+  selection_alternative:
+    CommandLine|contains:
+      - awk.*system(
+      - gawk.*system(
+      - nawk.*system(
+      - mawk.*system(
+  condition: >-
+    (selection_awk_binary and (selection_system_function or
+    selection_awk_patterns)) or selection_alternative

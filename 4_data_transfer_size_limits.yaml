@@ -1,0 +1,13 @@
+title: Data Transfer Size Limits
+description: Identify suspicious behavior in Linux systems using the split command for file splitting. This operation indicates that a user is breaking large files into fixed-size chunks, possibly in preparation for subsequent data exfiltration.
+status: experimental
+author: Luca Vaudano
+level: medium
+logsource:
+    product: any
+    category: any
+detection:
+  selection:
+    Image|contains: /usr/bin/split
+    CommandLine|contains: split -b
+  condition: selection
