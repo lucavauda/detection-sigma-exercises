@@ -1,5 +1,7 @@
 title: Attempting to Disable AppArmor Service
-description: Attempt to write detection rules that identify behaviors in the system that disable or attempt to shut down the AppArmor security module.
+description: >
+  Attempt to write detection rules that identify behaviors in the system that disable or 
+  attempt to shut down the AppArmor security module.
 status: experimental
 author: Luca Vaudano
 level: medium

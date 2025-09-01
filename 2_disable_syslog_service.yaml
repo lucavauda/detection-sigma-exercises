@@ -1,5 +1,7 @@
 title: Attempting to Disable the Syslog Service
-description: Write rules to identify attempts to disable or shut down the Syslog service in Linux systems, considering all possible commands or operations that could be used to deactivate the service.
+description: > 
+  Write rules to identify attempts to disable or shut down the Syslog service in Linux systems, 
+  considering all possible commands or operations that could be used to deactivate the service.
 status: experimental
 author: Luca Vaudano
 level: medium
