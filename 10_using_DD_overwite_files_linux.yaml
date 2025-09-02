@@ -1,0 +1,19 @@
+title: Using DD to Overwrite Files in Linux
+description: >
+  Identify suspicious usage patterns of the DD command in systems. Focus on DD commands combined with specific input sources
+  (such as /dev/zero, /dev/urandom, or /dev/null) that output to critical system files, configuration directories, 
+  or locations containing large volumes of stored data.
+status: experimental
+author: Luca Vaudanos
+level: medium
+logsource:
+    product: any
+    category: any
+detection:
+    selection: 
+        CommandLine|contains:
+            - '/dev/zero'
+            - '/dev/urandom'
+            - '/dev/null'
+    condition: selection
+    
